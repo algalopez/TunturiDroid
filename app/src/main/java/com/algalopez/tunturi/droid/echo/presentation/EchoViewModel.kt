@@ -1,4 +1,4 @@
-package com.algalopez.tunturi.droid.ui.main
+package com.algalopez.tunturi.droid.echo.presentation
 
 import androidx.lifecycle.ViewModel
 

@@ -1,17 +1,18 @@
-package com.algalopez.tunturi.droid
+package com.algalopez.tunturi.droid.echo.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.algalopez.tunturi.droid.ui.main.MainFragment
+import com.algalopez.tunturi.droid.R
 
-class MainActivity : AppCompatActivity() {
+class EchoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.echo_activity)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, EchoFragment.newInstance())
                 .commitNow()
         }
     }
