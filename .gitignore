@@ -1,0 +1,14 @@
+# FILE EXTENSIONS
+*.iml
+
+# FOLDERS
+.gradle
+.idea
+build
+captures
+
+# OTHERS
+local.properties
+.DS_Store
+.externalNativeBuild
+.cxx
