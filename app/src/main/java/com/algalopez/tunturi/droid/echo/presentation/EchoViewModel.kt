@@ -28,7 +28,7 @@ class EchoViewModel(private val echoActor: EchoActor) : ViewModel() {
         Log.d(TAG, "Sending something")
 
         viewModelScope.launch {
-            val flow = echoActor.run("asdasdasd")
+            val flow = echoActor.run(message)
             flow.collect { response ->
                 Log.d(TAG, response.toString())
                 echoResponse.value = response
@@ -36,6 +36,5 @@ class EchoViewModel(private val echoActor: EchoActor) : ViewModel() {
             }
         }
     }
-
 
 }
