@@ -1,6 +1,8 @@
 package com.algalopez.tunturi.droid.common
 
+import kotlinx.coroutines.flow.Flow
+
 abstract class BaseInteractor<Request, Response> {
 
-    abstract fun run(request: Request): Response
+    abstract suspend fun run(request: Request): Flow<Response>
 }
