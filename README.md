@@ -1,4 +1,4 @@
-
+# TunturiDroid
 
 Just an app for learning and experimenting with:
 
@@ -8,3 +8,9 @@ Just an app for learning and experimenting with:
 * Retrofit
 * Coroutines
 * Architecture components (Lifecycle, Room, Navigation, etc)
+
+
+## Getting started
+
+Android Studio plugins used
+* Mapstruct
