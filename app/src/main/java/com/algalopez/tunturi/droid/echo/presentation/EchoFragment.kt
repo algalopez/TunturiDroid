@@ -33,7 +33,7 @@ class EchoFragment : Fragment() {
 
         rootView = inflater.inflate(R.layout.echo_fragment, container, false)
 
-        echoViewModel.getEchoResponse().observe(this, Observer { response ->
+        echoViewModel.getEchoResponse().observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is EchoResponse.Loading -> renderLoading(response.percentage)
                 is EchoResponse.Error -> renderError(response.errorMessage)
