@@ -6,17 +6,17 @@ import androidx.room.*
 interface EchoDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertMessage(echo: EchoMessage)
+    suspend fun insertMessage(vararg echo: EchoMessage)
 
     @Update
-    fun updateMessage(echo: EchoMessage)
+    suspend fun updateMessage(vararg echo: EchoMessage)
 
     @Delete
-    fun deleteMessage(echo: EchoMessage)
+    suspend fun deleteMessage(vararg echo: EchoMessage)
 
     @Query(value = "SELECT * FROM echo WHERE id == :name")
-    fun getMessageById(name: String): List<EchoMessage>
+    suspend fun getMessageById(name: String): List<EchoMessage>
 
     @Query(value = "SELECT * FROM echo")
-    fun getMessages(): List<EchoMessage>
+    suspend fun getMessages(): List<EchoMessage>
 }
