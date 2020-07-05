@@ -14,8 +14,8 @@ interface EchoDao {
     @Delete
     suspend fun deleteMessage(vararg echo: EchoMessage)
 
-    @Query(value = "SELECT * FROM echo WHERE id == :name")
-    suspend fun getMessageById(name: String): List<EchoMessage>
+    @Query(value = "SELECT * FROM echo WHERE id == :id")
+    suspend fun getMessageById(id: Int): List<EchoMessage>
 
     @Query(value = "SELECT * FROM echo")
     suspend fun getMessages(): List<EchoMessage>

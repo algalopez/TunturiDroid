@@ -15,12 +15,8 @@ abstract class EchoDatabase : RoomDatabase() {
     abstract fun echoDao(): EchoDao;
 
     companion object {
-        private var TEST_MODE = false
         private const val databaseName = "tunturi"
-
-        private var db: EchoDatabase? = null
         private var dbInstance: EchoDao? = null
-
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
@@ -30,18 +26,12 @@ abstract class EchoDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): EchoDao {
             if (dbInstance == null) {
-                if (TEST_MODE) {
-                    db = Room.inMemoryDatabaseBuilder(context, EchoDatabase::class.java)
-                        .allowMainThreadQueries()
-                        .addMigrations(MIGRATION_1_2)
-                        .build()
-                    dbInstance = db?.echoDao()
-                } else {
-                    db = Room.databaseBuilder(context, EchoDatabase::class.java, databaseName)
-                        .addMigrations(MIGRATION_1_2)
-                        .build()
-                    dbInstance = db?.echoDao()
-                }
+                Room.databaseBuilder(context, EchoDatabase::class.java, databaseName)
+                    .addMigrations(MIGRATION_1_2)
+                    .build()
+                    .also {
+                        dbInstance = it.echoDao()
+                    }
             }
             return dbInstance!!
         }
