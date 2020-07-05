@@ -1,24 +1,18 @@
 package com.algalopez.tunturi.droid.echo.repository
 
 import android.util.Log
-import androidx.annotation.WorkerThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class EchoRepository(private val echoDao: EchoDao) {
 
-    @WorkerThread
     suspend fun insertMessage(echoMessage: EchoMessage) = withContext(Dispatchers.IO) {
-//        echoDao.insertMessage(echoMessage)
-        Log.d(this@EchoRepository.toString(), "insertMessage: $echoMessage")
-//      TODO("not implemented")
+        Log.d(this@EchoRepository.toString(), "Inserting message: $echoMessage")
+        echoDao.insertMessage(echoMessage)
     }
 
-    @WorkerThread
-    suspend fun getMessages() = withContext(Dispatchers.IO) {
-//        echoDao.getMessages()
-        Log.d(this@EchoRepository.toString(), "getMessages")
-//        TODO("not implemented")
-
+    suspend fun getMessages(): List<EchoMessage> = withContext(Dispatchers.IO) {
+        Log.d(this@EchoRepository.toString(), "Getting all messages")
+        return@withContext echoDao.getMessages()
     }
 }
