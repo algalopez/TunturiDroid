@@ -16,19 +16,11 @@ import org.mapstruct.factory.Mappers
 import org.mockito.Mockito.mock
 
 
-val echoDaoMock: EchoDao = mock(EchoDao::class.java)
+val echoDaoStub: EchoDao = mock(EchoDao::class.java)
 
 val dependencyModuleList = module {
 
-//    single { ApplicationProvider.getApplicationContext<Context>() as Context }
-//    single {
-//        Room.inMemoryDatabaseBuilder(get(), EchoDatabase::class.java)
-//            .allowMainThreadQueries()
-//            .build()
-//    }
-//    single { get<EchoDatabase>().echoDao() }
-
-    single { echoDaoMock } bind EchoDao::class
+    single { echoDaoStub } bind EchoDao::class
     single { EchoRepository(get()) } bind EchoRepository::class
 
     single { Mappers.getMapper(EchoMapper::class.java) } bind EchoMapper::class

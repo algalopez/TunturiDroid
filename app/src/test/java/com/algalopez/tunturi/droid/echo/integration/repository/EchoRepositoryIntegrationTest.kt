@@ -22,7 +22,7 @@ import java.util.*
 @RunWith(MockitoJUnitRunner::class)
 class EchoRepositoryIntegrationTest : AutoCloseKoinTest() {
 
-    private val mockEchoDao: EchoDao by inject()
+    private val echoDaoStub: EchoDao by inject()
     private val echoRepository: EchoRepository by inject()
 
     @Before
@@ -33,7 +33,7 @@ class EchoRepositoryIntegrationTest : AutoCloseKoinTest() {
 
     @Test
     fun `get empty list of messages`() = runBlocking {
-        given(mockEchoDao.getMessages()).willReturn(ArrayList<EchoMessage>())
+        given(echoDaoStub.getMessages()).willReturn(ArrayList<EchoMessage>())
 
         assertEquals(ArrayList<EchoMessage>(), echoRepository.getMessages())
     }
@@ -43,7 +43,7 @@ class EchoRepositoryIntegrationTest : AutoCloseKoinTest() {
         val echoMessage1 = EchoMessage(message = "message1", dateTime = LocalDateTime.now(Clock.systemUTC()))
         val echoMessage2 = EchoMessage(message = "message2", dateTime = LocalDateTime.now(Clock.systemUTC()))
 
-        given(mockEchoDao.getMessages()).willReturn(listOf(echoMessage1, echoMessage2))
+        given(echoDaoStub.getMessages()).willReturn(listOf(echoMessage1, echoMessage2))
 
         val echoMessages = echoRepository.getMessages()
 
