@@ -3,19 +3,19 @@ package com.algalopez.tunturi.droid.todo.integration.repository
 import com.algalopez.tunturi.droid.dependencyModuleList
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import com.algalopez.tunturi.droid.todo.repository.TodoMapper
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.koin.core.context.startKoin
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.junit.jupiter.MockitoExtension
 
 typealias DomainItem = Item
 typealias RepositoryItem = com.algalopez.tunturi.droid.todo.repository.Item
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class TodoMapperIntegrationTest : AutoCloseKoinTest() {
 
     private companion object {
@@ -25,7 +25,7 @@ class TodoMapperIntegrationTest : AutoCloseKoinTest() {
 
     private val todoMapper: TodoMapper by inject()
 
-    @Before
+    @BeforeEach
     fun prepareDependencyInjection() {
         startKoin { modules(dependencyModuleList) }
     }

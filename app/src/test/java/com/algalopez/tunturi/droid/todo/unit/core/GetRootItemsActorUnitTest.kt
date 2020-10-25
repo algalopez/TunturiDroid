@@ -6,16 +6,16 @@ import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.junit.jupiter.MockitoExtension
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class GetRootItemsActorUnitTest {
 
     @Mock
@@ -23,7 +23,7 @@ class GetRootItemsActorUnitTest {
 
     private lateinit var getRootItemsActor: GetRootItemsActor
 
-    @Before
+    @BeforeEach
     fun `init mocks`() {
 
         getRootItemsActor = GetRootItemsActor(todoRepository = todoRepository)
@@ -39,12 +39,11 @@ class GetRootItemsActorUnitTest {
         val flow = getRootItemsActor.run("exampleMessage")
         flow.collect { value ->
             when (value) {
-                is TodoResponse.Success ->  {
+                is TodoResponse.Success -> {
                     assertEquals(expectedItem, value.itemList[0])
                 }
             }
         }
     }
 
-    private fun <T> any(): T = Mockito.any<T>()
 }

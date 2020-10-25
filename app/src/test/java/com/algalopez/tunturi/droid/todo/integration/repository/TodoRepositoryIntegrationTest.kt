@@ -5,25 +5,25 @@ import com.algalopez.tunturi.droid.todo.repository.Item
 import com.algalopez.tunturi.droid.todo.repository.ItemDao
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 import org.mockito.BDDMockito.given
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class TodoRepositoryIntegrationTest : AutoCloseKoinTest() {
 
     private val itemDaoStub: ItemDao by inject()
     private val todoRepository: TodoRepository by inject()
 
-    @Before
+    @BeforeEach
     fun prepareDependencyInjection() {
         stopKoin()
         startKoin { modules(dependencyModuleList) }
