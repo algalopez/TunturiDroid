@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.algalopez.tunturi.droid.todo.core.GetRootItemsActor
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -14,9 +15,9 @@ private const val TAG: String = "EchoViewModel"
 
 class TodoListViewModel(private val getRootItemsActor: GetRootItemsActor) : ViewModel() {
 
-    private val echoResponse = MutableLiveData<EchoResponse>()
+    private val echoResponse = MutableLiveData<TodoResponse>()
 
-    fun getEchoResponse(): LiveData<EchoResponse> {
+    fun getEchoResponse(): LiveData<TodoResponse> {
 
         Log.d(TAG, "getting livedata response")
         return echoResponse

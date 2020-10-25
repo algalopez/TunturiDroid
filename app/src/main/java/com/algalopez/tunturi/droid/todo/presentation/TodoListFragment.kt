@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.algalopez.tunturi.droid.R
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.android.synthetic.main.todo_list_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -34,9 +35,9 @@ class TodoListFragment : Fragment() {
 
         todoListViewModel.getEchoResponse().observe(viewLifecycleOwner, Observer { response ->
             when (response) {
-                is EchoResponse.Loading -> renderLoading(response.percentage)
-                is EchoResponse.Error -> renderError(response.errorMessage)
-                is EchoResponse.Success -> renderSuccess(response.todoItemList)
+                is TodoResponse.Loading -> renderLoading(response.percentage)
+                is TodoResponse.Error -> renderError(response.errorMessage)
+                is TodoResponse.Success -> renderSuccess(response.itemList)
             }
         })
 

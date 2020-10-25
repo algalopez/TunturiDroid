@@ -32,7 +32,7 @@ class TodoMapperIntegrationTest : AutoCloseKoinTest() {
 
     @Test
     fun `map correct message to domain`() {
-        val expectedItem = DomainItem(id = 1, name = MESSAGE, color = "color")
+        val expectedItem = DomainItem(id = 1, name = MESSAGE, color = COLOR)
         val repositoryItem = RepositoryItem(id = 1, name = MESSAGE, color = COLOR)
 
         assertEquals(expectedItem, todoMapper.toDomain(repositoryItem))

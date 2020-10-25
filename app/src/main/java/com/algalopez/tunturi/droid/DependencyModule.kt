@@ -17,7 +17,7 @@ val dependencyModuleList = module {
 
     single { TodoRepository(get()) } bind ITodoRepository::class
     single { TodoRepositoryAdapter(get(), get()) } bind ITodoRepository::class
-    single { GetRootItemsActor(get(), get()) }
+    single { GetRootItemsActor(get()) }
 
     viewModel { TodoListViewModel(get()) }
 }
