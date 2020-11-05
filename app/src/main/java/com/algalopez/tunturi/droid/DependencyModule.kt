@@ -1,7 +1,8 @@
 package com.algalopez.tunturi.droid
 
-import com.algalopez.tunturi.droid.todo.core.GetRootItemsActor
+import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
+import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
 import com.algalopez.tunturi.droid.todo.presentation.TodoListViewModel
 import com.algalopez.tunturi.droid.todo.repository.TodoMapper
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository
@@ -17,7 +18,8 @@ val dependencyModuleList = module {
 
     single { TodoRepository(get()) } bind ITodoRepository::class
     single { TodoRepositoryAdapter(get(), get()) } bind ITodoRepository::class
-    single { GetRootItemsActor(get()) }
+    single { GetAllItemsActor(get()) }
+    single { InsertItemActor(get()) }
 
-    viewModel { TodoListViewModel(get()) }
+    viewModel { TodoListViewModel(get(), get()) }
 }

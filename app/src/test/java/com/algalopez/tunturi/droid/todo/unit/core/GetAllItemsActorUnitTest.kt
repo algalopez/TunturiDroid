@@ -1,8 +1,8 @@
 package com.algalopez.tunturi.droid.todo.unit.core
 
-import com.algalopez.tunturi.droid.todo.core.GetRootItemsActor
+import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
-import com.algalopez.tunturi.droid.todo.core.TodoResponse
+import com.algalopez.tunturi.droid.todo.core.TodoQueryResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -15,17 +15,17 @@ import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
-class GetRootItemsActorUnitTest {
+class GetAllItemsActorUnitTest {
 
     @Mock
     private lateinit var todoRepository: ITodoRepository
 
-    private lateinit var getRootItemsActor: GetRootItemsActor
+    private lateinit var getAllItemsActor: GetAllItemsActor
 
     @BeforeEach
     fun `init mocks`() {
 
-        getRootItemsActor = GetRootItemsActor(todoRepository = todoRepository)
+        getAllItemsActor = GetAllItemsActor(todoRepository = todoRepository)
     }
 
     @Test
@@ -35,10 +35,10 @@ class GetRootItemsActorUnitTest {
 
         Mockito.`when`(todoRepository.findAllItems()).thenReturn(listOf(expectedItem))
 
-        val flow = getRootItemsActor.run("exampleMessage")
+        val flow = getAllItemsActor.run(Unit)
         flow.collect { value ->
             when (value) {
-                is TodoResponse.Success -> {
+                is TodoQueryResponse.Success -> {
                     assertEquals(expectedItem, value.itemList[0])
                 }
             }
