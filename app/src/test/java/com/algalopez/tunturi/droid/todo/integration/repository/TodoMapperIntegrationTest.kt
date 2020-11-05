@@ -12,8 +12,8 @@ import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 import org.mockito.junit.jupiter.MockitoExtension
 
-typealias DomainItem = Item
-typealias RepositoryItem = com.algalopez.tunturi.droid.todo.repository.Item
+private typealias DomainItem = Item
+private typealias RepositoryItem = com.algalopez.tunturi.droid.todo.repository.Item
 
 @ExtendWith(MockitoExtension::class)
 class TodoMapperIntegrationTest : AutoCloseKoinTest() {

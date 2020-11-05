@@ -6,5 +6,5 @@ interface ITodoRepository {
 
     suspend fun insertItem(item: Item)
 
-    suspend fun findAllItems(offset: Int, pageSize: Int): List<Item>
+    suspend fun findAllItems(): List<Item>
 }

@@ -15,7 +15,7 @@ interface ItemDao {
     suspend fun deleteItem(vararg item: Item)
 
     @Query(value = "SELECT * FROM todo_item WHERE id == :id")
-    suspend fun getItemById(id: Int): List<Item>
+    suspend fun getItemById(id: Int): Item
 
     @Query(value = "SELECT * FROM todo_item")
     suspend fun getAllItems(): List<Item>

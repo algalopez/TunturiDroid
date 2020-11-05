@@ -18,12 +18,12 @@ class GetRootItemsActor(
      */
     override suspend fun run(request: String): Flow<TodoResponse> = flow {
 
-        Log.d(this@GetRootItemsActor.toString(), "Executing echo actor")
+        Log.d(this@GetRootItemsActor.toString(), "Executing actor")
 
         emit(TodoResponse.Loading(33))
         emit(TodoResponse.Loading(66))
 
-        val itemList: List<Item> = todoRepository.findAllItems(0, 10)
+        val itemList: List<Item> = todoRepository.findAllItems()
 
         emit(TodoResponse.Success(itemList))
     }

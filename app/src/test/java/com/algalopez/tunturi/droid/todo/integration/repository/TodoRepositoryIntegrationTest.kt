@@ -37,18 +37,28 @@ class TodoRepositoryIntegrationTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun `get list of messages`() = runBlocking {
+    fun `get all items`() = runBlocking {
         val item1 = Item(id = 1, name = "name1", color = "color1")
         val item2 = Item(id = 2, name = "name2", color = "color2")
         given(itemDaoStub.getAllItems()).willReturn(listOf(item1, item2))
 
-        val echoMessages = todoRepository.getAllItems()
+        val actualItems = todoRepository.getAllItems()
 
-        assertEquals(listOf(item1, item2), echoMessages)
+        assertEquals(listOf(item1, item2), actualItems)
     }
 
     @Test
-    fun `insert message`() = runBlocking {
+    fun `get item by id`() = runBlocking {
+        val item1 = Item(id = 1, name = "name1", color = "color1")
+        given(itemDaoStub.getItemById(item1.id!!)).willReturn(item1)
+
+        val actualItem = todoRepository.getItemById(item1.id!!)
+
+        assertEquals(item1, actualItem)
+    }
+
+    @Test
+    fun `insert item`() = runBlocking {
         val echoMessage = Item(id = 1, name = "name", color = "color")
 
         val unit = todoRepository.insertItem(echoMessage)

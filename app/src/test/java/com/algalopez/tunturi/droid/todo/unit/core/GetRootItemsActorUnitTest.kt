@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
@@ -34,7 +33,7 @@ class GetRootItemsActorUnitTest {
 
         val expectedItem = Item(id = 1, name = "name", color = "color")
 
-        Mockito.`when`(todoRepository.findAllItems(anyInt(), anyInt())).thenReturn(listOf(expectedItem))
+        Mockito.`when`(todoRepository.findAllItems()).thenReturn(listOf(expectedItem))
 
         val flow = getRootItemsActor.run("exampleMessage")
         flow.collect { value ->

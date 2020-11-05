@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 
-typealias RepositoryItem = Item
-typealias DomainItem = com.algalopez.tunturi.droid.todo.core.model.Item
+private typealias RepositoryItem = Item
+private typealias DomainItem = com.algalopez.tunturi.droid.todo.core.model.Item
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface TodoMapper {

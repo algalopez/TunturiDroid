@@ -12,7 +12,8 @@ class TodoRepositoryAdapter(
         return todoRepository.insertItem(item = todoMapper.fromDomain(item))
     }
 
-    override suspend fun findAllItems(offset: Int, pageSize: Int): List<Item> {
+    // TODO: add offset and pageSize
+    override suspend fun findAllItems(): List<Item> {
         return todoRepository.getAllItems().map { todoMapper.toDomain(it) }
     }
 }
