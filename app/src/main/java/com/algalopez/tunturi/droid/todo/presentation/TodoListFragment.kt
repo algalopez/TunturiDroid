@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.algalopez.tunturi.droid.R
-import com.algalopez.tunturi.droid.todo.core.TodoCommandResponse
-import com.algalopez.tunturi.droid.todo.core.TodoQueryResponse
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
-import kotlinx.android.synthetic.main.todo_list_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val TAG: String = "EchoFragment"
@@ -34,7 +31,7 @@ class TodoListFragment : Fragment() {
 
         rootView = inflater.inflate(R.layout.todo_list_fragment, container, false)
 
-        observeCommandQueryActors()
+        observeActors()
 
         val sendBtn = rootView.findViewById(R.id.send_btn) as Button
         sendBtn.setOnClickListener { onGetAllItemsClick() }
@@ -42,19 +39,13 @@ class TodoListFragment : Fragment() {
         return rootView
     }
 
-    private fun observeCommandQueryActors() {
-        todoListViewModel.getQueryResponse().observe(viewLifecycleOwner, Observer { response ->
+    private fun observeActors() {
+        todoListViewModel.getResponse().observe(viewLifecycleOwner, { response ->
             when (response) {
-                is TodoQueryResponse.Loading -> renderLoading(response.percentage)
-                is TodoQueryResponse.Error -> renderError(response.errorMessage)
-                is TodoQueryResponse.Success -> renderSuccess(response.itemList)
-            }
-        })
-        todoListViewModel.getCommandResponse().observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is TodoCommandResponse.Loading -> renderLoading(response.percentage)
-                is TodoCommandResponse.Error -> renderError(response.errorMessage)
-                is TodoCommandResponse.Success -> renderSuccess()
+                is TodoResponse.Loading -> renderLoading(response.percentage)
+                is TodoResponse.Error -> renderError(response.errorMessage)
+                is TodoResponse.QuerySuccess -> renderSuccess(response.itemList)
+                is TodoResponse.CommandSuccess -> renderSuccess()
             }
         })
     }
@@ -62,7 +53,6 @@ class TodoListFragment : Fragment() {
     private fun onGetAllItemsClick() {
 
         Log.d(TAG, "Send button clicked")
-        val message: String = request_tv.text.toString()
         todoListViewModel.getAllItems()
     }
 

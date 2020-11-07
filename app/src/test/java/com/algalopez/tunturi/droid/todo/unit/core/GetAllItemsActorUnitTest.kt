@@ -2,11 +2,12 @@ package com.algalopez.tunturi.droid.todo.unit.core
 
 import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
-import com.algalopez.tunturi.droid.todo.core.TodoQueryResponse
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -38,9 +39,11 @@ class GetAllItemsActorUnitTest {
         val flow = getAllItemsActor.run(Unit)
         flow.collect { value ->
             when (value) {
-                is TodoQueryResponse.Success -> {
+                is TodoResponse.QuerySuccess -> {
                     assertEquals(expectedItem, value.itemList[0])
                 }
+                is TodoResponse.Error -> fail()
+                else -> {}
             }
         }
     }

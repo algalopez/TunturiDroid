@@ -3,28 +3,28 @@ package com.algalopez.tunturi.droid.todo.core.actor
 import android.util.Log
 import com.algalopez.tunturi.droid.common.BaseInteractor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
-import com.algalopez.tunturi.droid.todo.core.TodoQueryResponse
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetAllItemsActor(
     private val todoRepository: ITodoRepository
-) : BaseInteractor<Unit, TodoQueryResponse>() {
+) : BaseInteractor<Unit, TodoResponse>() {
 
     /**
      * Get all items
      *
      * @return All items
      */
-    override suspend fun run(request: Unit): Flow<TodoQueryResponse> = flow {
+    override suspend fun run(request: Unit): Flow<TodoResponse> = flow {
 
         Log.d(this@GetAllItemsActor.toString(), "Executing actor")
 
-        emit(TodoQueryResponse.Loading(0))
+        emit(TodoResponse.Loading(0))
 
         val itemList: List<Item> = todoRepository.findAllItems()
 
-        emit(TodoQueryResponse.Success(itemList))
+        emit(TodoResponse.QuerySuccess(itemList))
     }
 }

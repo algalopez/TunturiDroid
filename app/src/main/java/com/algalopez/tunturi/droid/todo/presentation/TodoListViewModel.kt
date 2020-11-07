@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.algalopez.tunturi.droid.todo.core.TodoCommandResponse
 import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
-import com.algalopez.tunturi.droid.todo.core.TodoQueryResponse
+import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.collect
@@ -21,17 +20,11 @@ class TodoListViewModel(
     private val insertItemActor: InsertItemActor
 ) : ViewModel() {
 
-    private val queryResponse = MutableLiveData<TodoQueryResponse>()
-    private val commandResponse = MutableLiveData<TodoCommandResponse>()
+    private val todoResponse = MutableLiveData<TodoResponse>()
 
-    fun getQueryResponse(): LiveData<TodoQueryResponse> {
+    fun getResponse(): LiveData<TodoResponse> {
         Log.d(TAG, "getting live data query response")
-        return queryResponse
-    }
-
-    fun getCommandResponse(): LiveData<TodoCommandResponse> {
-        Log.d(TAG, "getting live data query response")
-        return commandResponse
+        return todoResponse
     }
 
     fun getAllItems() {
@@ -41,7 +34,7 @@ class TodoListViewModel(
             val flow = getAllItemsActor.run(Unit)
             flow.collect { response ->
                 Log.d(TAG, response.toString())
-                queryResponse.value = response
+                todoResponse.value = response
 
             }
         }
@@ -54,7 +47,7 @@ class TodoListViewModel(
             val flow = insertItemActor.run(Item(id = null, name = name, color = color))
             flow.collect { response ->
                 Log.d(TAG, response.toString())
-                commandResponse.value = response
+                todoResponse.value = response
             }
         }
     }
