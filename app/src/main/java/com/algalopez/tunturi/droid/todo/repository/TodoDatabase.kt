@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 @TypeConverters(DateTypeConverters::class)
 abstract class TodoDatabase : RoomDatabase() {
 
-    abstract fun echoDao(): ItemDao;
+    abstract fun itemDao(): ItemDao;
 
     companion object {
         private const val databaseName = "tunturi"
@@ -30,7 +30,7 @@ abstract class TodoDatabase : RoomDatabase() {
                     .addMigrations(MIGRATION_1_2)
                     .build()
                     .also {
-                        dbInstance = it.echoDao()
+                        dbInstance = it.itemDao()
                     }
             }
             return dbInstance!!

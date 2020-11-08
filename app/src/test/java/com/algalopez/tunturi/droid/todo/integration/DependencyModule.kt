@@ -20,10 +20,12 @@ val ITEM_DAO_STUB: ItemDao = mock(ItemDao::class.java)
 val dependencyModuleList = module {
 
     single { ITEM_DAO_STUB } bind ItemDao::class
+
     single { TodoRepository(get()) } bind TodoRepository::class
     single { Mappers.getMapper(TodoMapper::class.java) } bind TodoMapper::class
 
     single { TodoRepositoryAdapter(get(), get()) } bind ITodoRepository::class
+
     single { GetAllItemsActor(get()) }
     single { InsertItemActor(get()) }
 

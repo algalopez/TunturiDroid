@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetAllItemsActor(
-    private val todoRepository: ITodoRepository
+    private val todoRepositoryAdapter: ITodoRepository
 ) : BaseInteractor<Unit, TodoResponse>() {
 
     /**
@@ -23,7 +23,7 @@ class GetAllItemsActor(
 
         emit(TodoResponse.Loading(0))
 
-        val itemList: List<Item> = todoRepository.findAllItems()
+        val itemList: List<Item> = todoRepositoryAdapter.findAllItems()
 
         emit(TodoResponse.QuerySuccess(itemList))
     }
