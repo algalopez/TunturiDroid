@@ -1,8 +1,8 @@
 package com.algalopez.tunturi.droid.todo.integration.repository
 
-import com.algalopez.tunturi.droid.dependencyModuleList
 import com.algalopez.tunturi.droid.todo.core.model.Item
-import com.algalopez.tunturi.droid.todo.repository.TodoMapper
+import com.algalopez.tunturi.droid.todo.integration.integrationDependencyModuleList
+import com.algalopez.tunturi.droid.todo.repository.adapter.TodoMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -27,7 +27,7 @@ class TodoMapperIntegrationTest : AutoCloseKoinTest() {
 
     @BeforeEach
     fun prepareDependencyInjection() {
-        startKoin { modules(dependencyModuleList) }
+        startKoin { modules(integrationDependencyModuleList) }
     }
 
     @Test

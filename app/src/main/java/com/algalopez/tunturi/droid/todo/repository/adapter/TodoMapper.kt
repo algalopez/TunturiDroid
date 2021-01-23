@@ -1,5 +1,6 @@
-package com.algalopez.tunturi.droid.todo.repository
+package com.algalopez.tunturi.droid.todo.repository.adapter
 
+import com.algalopez.tunturi.droid.todo.repository.Item
 import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping

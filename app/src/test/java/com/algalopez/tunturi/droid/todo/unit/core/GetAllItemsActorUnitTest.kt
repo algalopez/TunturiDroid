@@ -26,7 +26,7 @@ class GetAllItemsActorUnitTest {
     @BeforeEach
     fun `init mocks`() {
 
-        getAllItemsActor = GetAllItemsActor(todoRepository = todoRepository)
+        getAllItemsActor = GetAllItemsActor(todoRepositoryAdapter = todoRepository)
     }
 
     @Test

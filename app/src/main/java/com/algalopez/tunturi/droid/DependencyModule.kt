@@ -6,6 +6,8 @@ import com.algalopez.tunturi.droid.todo.core.ITodoRepository
 import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
 import com.algalopez.tunturi.droid.todo.presentation.TodoListViewModel
 import com.algalopez.tunturi.droid.todo.repository.*
+import com.algalopez.tunturi.droid.todo.repository.adapter.TodoMapper
+import com.algalopez.tunturi.droid.todo.repository.adapter.TodoRepositoryAdapter
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module

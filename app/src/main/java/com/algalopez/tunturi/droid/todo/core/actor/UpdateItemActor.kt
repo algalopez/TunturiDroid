@@ -8,21 +8,24 @@ import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetAllItemsActor(
-    private val todoRepositoryAdapter: ITodoRepository
-) : BaseInteractor<Unit, TodoResponse>() {
+class UpdateItemActor(
+    private val todoRepository: ITodoRepository
+) : BaseInteractor<Item, TodoResponse>() {
 
     /**
-     * Get all items
+     * Insert item
      *
-     * @return All items
+     * @param request: Item
+     * @return Unit
      */
-    override suspend fun run(request: Unit): Flow<TodoResponse> = flow {
+    override suspend fun run(request: Item): Flow<TodoResponse> = flow {
 
-        Log.d(this@GetAllItemsActor.toString(), "Executing actor")
+        Log.d(this@UpdateItemActor.toString(), "Executing actor")
+
         emit(TodoResponse.Loading(0))
 
-        val itemList: List<Item> = todoRepositoryAdapter.findAllItems()
-        emit(TodoResponse.QuerySuccess(itemList))
+        todoRepository.updateItem(request)
+
+        emit(TodoResponse.CommandSuccess)
     }
 }

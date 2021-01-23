@@ -1,6 +1,6 @@
 package com.algalopez.tunturi.droid.todo.integration.repository
 
-import com.algalopez.tunturi.droid.todo.integration.dependencyModuleList
+import com.algalopez.tunturi.droid.todo.integration.integrationDependencyModuleList
 import com.algalopez.tunturi.droid.todo.repository.Item
 import com.algalopez.tunturi.droid.todo.repository.ItemDao
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository
@@ -26,7 +26,7 @@ class TodoRepositoryIntegrationTest : AutoCloseKoinTest() {
     @BeforeEach
     fun prepareDependencyInjection() {
         stopKoin()
-        startKoin { modules(dependencyModuleList) }
+        startKoin { modules(integrationDependencyModuleList) }
     }
 
     @Test

@@ -1,8 +1,8 @@
 package com.algalopez.tunturi.droid.todo.unit.repository
 
-import com.algalopez.tunturi.droid.todo.repository.TodoMapper
+import com.algalopez.tunturi.droid.todo.repository.adapter.TodoMapper
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository
-import com.algalopez.tunturi.droid.todo.repository.TodoRepositoryAdapter
+import com.algalopez.tunturi.droid.todo.repository.adapter.TodoRepositoryAdapter
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeEach

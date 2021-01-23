@@ -1,7 +1,7 @@
-package com.algalopez.tunturi.droid.todo.integration
+package com.algalopez.tunturi.droid.todo
 
-import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
+import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
 import com.algalopez.tunturi.droid.todo.presentation.TodoListViewModel
 import com.algalopez.tunturi.droid.todo.repository.ItemDao
@@ -12,14 +12,11 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.mapstruct.factory.Mappers
-import org.mockito.Mockito.mock
 
 
-val ITEM_DAO_STUB: ItemDao = mock(ItemDao::class.java)
+internal val instrumentedDependencyModuleList = module {
 
-internal val integrationDependencyModuleList = module {
-
-    single { ITEM_DAO_STUB } bind ItemDao::class
+    single { TodoInMemoryDatabase.getInstance(get()) } bind ItemDao::class
 
     single { TodoRepository(get()) } bind TodoRepository::class
     single { Mappers.getMapper(TodoMapper::class.java) } bind TodoMapper::class
