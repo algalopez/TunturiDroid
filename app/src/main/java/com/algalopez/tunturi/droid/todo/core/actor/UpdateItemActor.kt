@@ -13,7 +13,7 @@ class UpdateItemActor(
 ) : BaseInteractor<Item, TodoResponse>() {
 
     /**
-     * Insert item
+     * Update item
      *
      * @param request: Item
      * @return Unit
@@ -21,11 +21,9 @@ class UpdateItemActor(
     override suspend fun run(request: Item): Flow<TodoResponse> = flow {
 
         Log.d(this@UpdateItemActor.toString(), "Executing actor")
-
         emit(TodoResponse.Loading(0))
 
         todoRepository.updateItem(request)
-
         emit(TodoResponse.CommandSuccess)
     }
 }

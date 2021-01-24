@@ -65,4 +65,22 @@ class TodoRepositoryIntegrationTest : AutoCloseKoinTest() {
 
         assertEquals(Unit, unit)
     }
+
+    @Test
+    fun `update item`() = runBlocking {
+        val echoMessage = Item(id = 1, name = "name", color = "color")
+
+        val unit = todoRepository.updateItem(echoMessage)
+
+        assertEquals(Unit, unit)
+    }
+
+    @Test
+    fun `delete item`() = runBlocking {
+        val echoMessage = Item(id = 1, name = "name", color = "color")
+
+        val unit = todoRepository.deleteItem(echoMessage)
+
+        assertEquals(Unit, unit)
+    }
 }

@@ -21,11 +21,9 @@ class InsertItemActor(
     override suspend fun run(request: Item): Flow<TodoResponse> = flow {
 
         Log.d(this@InsertItemActor.toString(), "Executing actor")
-
         emit(TodoResponse.Loading(0))
 
         todoRepository.insertItem(request)
-
         emit(TodoResponse.CommandSuccess)
     }
 }

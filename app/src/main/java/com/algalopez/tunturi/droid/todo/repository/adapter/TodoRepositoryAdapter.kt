@@ -9,20 +9,20 @@ class TodoRepositoryAdapter(
     private val todoMapper: TodoMapper
 ) : ITodoRepository {
 
-    override suspend fun insertItem(item: Item) {
-        return todoRepository.insertItem(item = todoMapper.fromDomain(item))
-    }
-
     // TODO: add offset and pageSize
     override suspend fun findAllItems(): List<Item> {
         return todoRepository.getAllItems().map { todoMapper.toDomain(it) }
     }
 
-    override suspend fun removeItem(id: Int) {
-        TODO("Not yet implemented")
+    override suspend fun insertItem(item: Item) {
+        return todoRepository.insertItem(item = todoMapper.fromDomain(item))
     }
 
     override suspend fun updateItem(item: Item) {
-        TODO("Not yet implemented")
+        return todoRepository.updateItem(item = todoMapper.fromDomain(item))
+    }
+
+    override suspend fun removeItem(item: Item) {
+        return todoRepository.deleteItem(item = todoMapper.fromDomain(item))
     }
 }

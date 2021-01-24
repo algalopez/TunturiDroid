@@ -4,6 +4,8 @@ import android.util.Log
 import com.algalopez.tunturi.droid.common.BaseInteractor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
 import com.algalopez.tunturi.droid.todo.core.TodoResponse
+import com.algalopez.tunturi.droid.todo.core.exception.FakeException
+import com.algalopez.tunturi.droid.todo.core.exception.TodoException
 import com.algalopez.tunturi.droid.todo.core.model.Item
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,10 +21,16 @@ class GetAllItemsActor(
      */
     override suspend fun run(request: Unit): Flow<TodoResponse> = flow {
 
-        Log.d(this@GetAllItemsActor.toString(), "Executing actor")
-        emit(TodoResponse.Loading(0))
+        try {
+            Log.d(this@GetAllItemsActor.toString(), "Executing actor")
+            emit(TodoResponse.Loading(0))
 
-        val itemList: List<Item> = todoRepositoryAdapter.findAllItems()
-        emit(TodoResponse.QuerySuccess(itemList))
+            val itemList: List<Item> = todoRepositoryAdapter.findAllItems()
+            emit(TodoResponse.QuerySuccess(itemList))
+        } catch (e: TodoException) {
+            when (e) {
+                is FakeException -> emit(TodoResponse.Error(e.message!!))
+            }
+        }
     }
 }

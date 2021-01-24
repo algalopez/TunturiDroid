@@ -1,4 +1,4 @@
-package com.algalopez.tunturi.droid.todo.unit.repository
+package com.algalopez.tunturi.droid.todo.unit.repository.adapter
 
 import com.algalopez.tunturi.droid.todo.repository.adapter.TodoMapper
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository

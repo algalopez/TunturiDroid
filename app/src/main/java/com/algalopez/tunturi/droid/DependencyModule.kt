@@ -4,6 +4,8 @@ import androidx.room.Room
 import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
 import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
+import com.algalopez.tunturi.droid.todo.core.actor.RemoveItemActor
+import com.algalopez.tunturi.droid.todo.core.actor.UpdateItemActor
 import com.algalopez.tunturi.droid.todo.presentation.TodoListViewModel
 import com.algalopez.tunturi.droid.todo.repository.*
 import com.algalopez.tunturi.droid.todo.repository.adapter.TodoMapper
@@ -25,6 +27,8 @@ val dependencyModuleList = module {
 
     single { GetAllItemsActor(get()) }
     single { InsertItemActor(get()) }
+    single { UpdateItemActor(get()) }
+    single { RemoveItemActor(get()) }
 
     viewModel { TodoListViewModel(get(), get()) }
 }

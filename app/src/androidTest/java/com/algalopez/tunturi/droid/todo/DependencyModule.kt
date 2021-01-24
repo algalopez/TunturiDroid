@@ -3,6 +3,8 @@ package com.algalopez.tunturi.droid.todo
 import com.algalopez.tunturi.droid.todo.core.ITodoRepository
 import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
 import com.algalopez.tunturi.droid.todo.core.actor.InsertItemActor
+import com.algalopez.tunturi.droid.todo.core.actor.RemoveItemActor
+import com.algalopez.tunturi.droid.todo.core.actor.UpdateItemActor
 import com.algalopez.tunturi.droid.todo.presentation.TodoListViewModel
 import com.algalopez.tunturi.droid.todo.repository.ItemDao
 import com.algalopez.tunturi.droid.todo.repository.TodoRepository
@@ -25,6 +27,8 @@ internal val instrumentedDependencyModuleList = module {
 
     single { GetAllItemsActor(get()) }
     single { InsertItemActor(get()) }
+    single { UpdateItemActor(get()) }
+    single { RemoveItemActor(get()) }
 
     viewModel { TodoListViewModel(get(), get()) }
 }

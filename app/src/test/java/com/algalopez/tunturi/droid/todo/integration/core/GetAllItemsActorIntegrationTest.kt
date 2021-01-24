@@ -2,11 +2,14 @@ package com.algalopez.tunturi.droid.todo.integration.core
 
 import com.algalopez.tunturi.droid.todo.core.TodoResponse
 import com.algalopez.tunturi.droid.todo.core.actor.GetAllItemsActor
+import com.algalopez.tunturi.droid.todo.core.exception.FakeException
 import com.algalopez.tunturi.droid.todo.integration.integrationDependencyModuleList
 import com.algalopez.tunturi.droid.todo.repository.ItemDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,10 +19,11 @@ import org.koin.core.context.stopKoin
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
 import org.mockito.BDDMockito.given
+import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
+import com.algalopez.tunturi.droid.todo.core.model.Item as DomainItem
+import com.algalopez.tunturi.droid.todo.repository.Item as RepositoryItem
 
-private typealias DomainItem = com.algalopez.tunturi.droid.todo.core.model.Item
-private typealias RepositoryItem = com.algalopez.tunturi.droid.todo.repository.Item
 
 @ExtendWith(MockitoExtension::class)
 class GetAllItemsActorIntegrationTest : AutoCloseKoinTest() {
@@ -33,37 +37,55 @@ class GetAllItemsActorIntegrationTest : AutoCloseKoinTest() {
         startKoin { modules(integrationDependencyModuleList) }
     }
 
+    @AfterEach
+    fun tearDownDependencyInjection() {
+        stopKoin()
+        Mockito.reset(itemDao)
+    }
+
     @Test
     fun `should return a list of items`() = runBlocking {
         val item1 = RepositoryItem(id = 1, name = "name1", color = "color1")
         val item2 = RepositoryItem(id = 2, name = "name2", color = "color2")
         given(itemDao.getAllItems()).willReturn(arrayListOf(item1, item2))
 
-        val itemList: List<DomainItem> = getFlowUniqueLastElement(getAllItemsActor.run(Unit))
+        val response: TodoResponse.QuerySuccess = getFlowForQuerySuccess(getAllItemsActor.run(Unit))!!
+        val itemList: List<DomainItem> = response.itemList
 
+        assertNotNull(itemList)
         assertEquals(2, itemList.size)
         assertTrue(itemList.contains(DomainItem(1, "name1", "color1")))
         assertTrue(itemList.contains(DomainItem(2, "name2", "color2")))
     }
 
-    private suspend fun getFlowUniqueLastElement(flow: Flow<TodoResponse>): List<DomainItem> {
-        var itemList: List<DomainItem>? = null
-        flow.collectLatest { element ->
-            when (element) {
-                is TodoResponse.Loading -> {
-                }
-                is TodoResponse.Error -> fail()
-                is TodoResponse.CommandSuccess -> fail()
-                is TodoResponse.QuerySuccess -> {
-                    if (itemList != null) {
-                        fail()
-                    } else {
-                        itemList = element.itemList
-                    }
-                }
+    @Test
+    fun `should notify error for known exceptions`() = runBlocking {
+
+        val expectedMessage = "Forced known exception"
+        given(itemDao.getAllItems()).willThrow(FakeException(expectedMessage))
+
+        val flow: Flow<TodoResponse> = getAllItemsActor.run(Unit)
+
+        val error: TodoResponse.Error = getFlowForError(flow)!!
+        assertEquals(expectedMessage, error.errorMessage)
+    }
+
+    @Test
+    fun `should fail for unknown exceptions`() = runBlocking {
+
+        val expectedMessage = "Forced unknown exception"
+        given(itemDao.getAllItems()).willThrow(RuntimeException(expectedMessage))
+
+        val flow: Flow<TodoResponse> = getAllItemsActor.run(Unit)
+
+        var exceptionThrown: Throwable? = null
+        flow
+            .catch { e ->
+                exceptionThrown = e
             }
-        }
-        assertNotNull(itemList)
-        return itemList!!
+            .collect { }
+
+        assertNotNull(exceptionThrown)
+        assertEquals(expectedMessage, exceptionThrown!!.message)
     }
 }
