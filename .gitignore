@@ -12,3 +12,4 @@ local.properties
 .DS_Store
 .externalNativeBuild
 .cxx
+$XDG_CACHE_HOME
